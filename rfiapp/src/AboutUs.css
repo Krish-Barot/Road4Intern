@@ -1,0 +1,25 @@
+.Aboutcontainer{
+    display: flex;
+    width: 70vw;
+    margin: 10px auto;
+    padding-top: 50px;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: center;
+}
+
+.internshipImg{
+    max-width: 500px;
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+}
+
+.aboutRoad4Intern{
+    text-align: justify;
+    line-height: 2;
+}
+
+.myImg{
+    height: 400px;
+}

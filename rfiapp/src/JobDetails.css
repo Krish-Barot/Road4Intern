@@ -1,0 +1,306 @@
+.landingPage {
+    background-color: black;
+    height: 50vh;
+}
+
+.heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    flex-wrap: wrap;
+}
+
+.navul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 75px;
+    list-style: none;
+    width: 70vw;
+    margin: 25px auto;
+}
+
+.navComponent {
+    color: grey;
+}
+
+.navComponent:hover {
+    color: white;
+    cursor: pointer;
+    padding-top: 5px;
+    text-decoration: underline;
+}
+
+.signingUl {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 25px auto;
+    list-style: none;
+    gap: 10px;
+}
+
+.login {
+    color: white;
+}
+
+.login:hover {
+    cursor: pointer;
+    color: gray;
+}
+
+.register {
+    color: white;
+    background-color: rgb(0, 195, 133);
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 13px;
+}
+
+.register:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.bodySec {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    width: 100vw;
+    margin: 100px auto;
+    line-height: 0.5;
+}
+
+.headLines {
+    font-size: 60px;
+    text-align: center;
+}
+
+.jobcard {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.5;
+}
+
+.detail {
+    padding: 75px;
+}
+
+.card {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Title {
+    font-size: 20px;
+    font-family: cursive;
+}
+
+.description {
+    line-height: 1.5;
+    text-align: justify;
+    text-wrap: wrap;
+    width: 50%;
+    padding: 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.company {
+    color: gray;
+    font-size: 15px;
+}
+
+.durationIcon {
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
+    vertical-align: text-top;
+}
+
+.salaryIcon {
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
+}
+
+.locationIcon {
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
+}
+
+.partition {
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.apply{
+    background-color: rgb(0, 195, 133);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.apply:hover{
+    color: black;
+    cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+    .heading {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .navul {
+        gap: 10px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .signingUl {
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .register,
+    .toLogIn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .description,
+    .info {
+        width: 90%;
+        padding: 10px;
+        text-align: justify;
+    }
+
+    .bodySec {
+        margin: 50px auto;
+        padding: 10px;
+    }
+
+    .headLines {
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .detail {
+        margin-top: 30px;
+        padding: 40px 20px;
+    }
+
+    .Title,
+    .company {
+        text-align: center;
+    }
+
+    .apply {
+        align-self: center;
+        margin-top: 15px;
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .landingPage{
+        height: 50vh;
+    }
+    .heading {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .logo {
+        width: 80px;
+    }
+
+    .navul {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 0;
+        margin: 10px 0;
+    }
+
+    .navCompo {
+        font-size: 14px;
+    }
+
+    .signingUl {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .register,
+    .toLogIn {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .bodySec {
+        padding: 30px;
+    }
+
+    .headLines {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .detail {
+        padding: 20px;
+    }
+
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .description,
+    .info {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .Title {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .company {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .apply {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+}

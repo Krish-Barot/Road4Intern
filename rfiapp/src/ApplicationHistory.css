@@ -1,0 +1,95 @@
+/* ApplicationHistory.css */
+
+.history {
+    margin: auto;
+    padding: 1rem;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+}
+
+.history h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.history ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.history li {
+    background: #f8f9fa;
+    margin-bottom: 0.8rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.history strong {
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.history em {
+    color: #666;
+    font-style: italic;
+}
+
+.history p {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .history {
+        padding: 0.8rem;
+    }
+
+    .history h2 {
+        font-size: 1.5rem;
+    }
+
+    .history li {
+        padding: 0.8rem;
+    }
+
+    .history strong {
+        font-size: 1rem;
+    }
+
+    .history p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .history h2 {
+        font-size: 1.3rem;
+    }
+
+    .history li {
+        padding: 0.6rem;
+    }
+
+    .history strong {
+        font-size: 0.95rem;
+    }
+
+    .history p {
+        font-size: 0.8rem;
+    }
+}

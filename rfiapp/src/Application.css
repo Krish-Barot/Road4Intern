@@ -1,0 +1,52 @@
+
+
+.card1{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 66vh;
+    gap: 50px;
+    color: white;
+}
+
+.head{
+    font-size: 50px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+.tagline{
+    text-decoration: underline;
+}
+
+.form-tag{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.fileUpload{
+    width: 300px;
+    height: 75px;
+    border: 1px solid white;
+    font-size: 20px;
+    /* background-color: white; */
+    color: white;
+    text-wrap: wrap;
+}
+
+.upload-btn{
+    background-color: rgb(0, 195, 133);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.upload-btn:hover{
+    color: black;
+    cursor: pointer;
+}

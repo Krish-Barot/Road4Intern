@@ -1,0 +1,556 @@
+.homepage {
+    background-color: black;
+    height: 100vh;
+}
+
+.name{
+    color: white;
+    font-size: 25px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    flex-wrap: wrap;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navUl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    list-style: none;
+    width: 70vw;
+    margin: 25px auto;
+}
+
+.navCompo {
+    color: grey;
+    text-decoration: none;
+}
+
+.navCompo:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.signInUp{
+    display: flex;
+    color: white;
+    gap: 10px;
+}
+
+.user-container{
+    background-color: rgba(128, 128, 128, 0.5);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.ul2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 25px auto;
+    list-style: none;
+    gap: 10px;
+}
+
+.toLogIn {
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.toLogIn:hover {
+    cursor: pointer;
+    color: gray;
+}
+
+.register {
+    color: white;
+    background-color: rgb(0, 195, 133);
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 13px;
+}
+
+.register:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.logoutBtn {
+    color: white;
+    background-color: rgb(0, 195, 133);
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 13px;
+}
+
+.logoutBtn:hover {
+    cursor: pointer;
+}
+
+.bodySection {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    width: 100vw;
+    margin: 100px auto;
+    line-height: 0.5;
+}
+
+.headLine {
+    font-size: 60px;
+    text-align: center;
+    line-height: 1;
+}
+
+.tagLine {
+    font-size: 20px;
+    text-align: center;
+}
+
+.filter {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    border: none;
+    border-radius: 4px;
+}
+
+.inputTag {
+    padding: 10px;
+}
+
+.searchButton {
+    background-color: rgb(0, 113, 75);
+    height: 50px;
+    border: none;
+    border-radius: 4px;
+    width: 150px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.searchButton:hover {
+    cursor: pointer;
+}
+
+.searchIcon {
+    height: 15px;
+    width: 15px;
+    padding-right: 2px;
+}
+
+.data {
+    display: flex;
+    justify-content: center;
+    width: 90vw;
+    margin: 40px auto;
+    gap: 200px;
+}
+
+.jobData {
+    display: flex;
+    height: 55px;
+    width: 55px;
+    background-color: rgb(0, 143, 96);
+    border-radius: 20px;
+    color: white;
+    padding-left: 2px;
+}
+
+.jobIcon {
+    height: 30px;
+    width: 30px;
+    padding: 11px;
+}
+
+.candidateIcon {
+    height: 32px;
+    width: 32px;
+    padding: 11px;
+}
+
+.companyIcon {
+    height: 33px;
+    width: 33px;
+    padding: 11px;
+}
+
+.designation {
+    color: gray;
+}
+
+.container1 {
+    display: flex;
+}
+
+.datas {
+    line-height: 0.5;
+    margin: 10px;
+}
+
+.number {
+    color: white;
+}
+
+
+.exampleCompanys {
+    margin: 600px;
+}
+
+.companys {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
+.companyName {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.companyName:hover {
+    color: gray;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .homepage{
+        width: 49rem;
+    }
+    .header {
+        margin: 5px;
+    }
+/* 
+    .logo {
+        height: 50px;
+        width: 175px;
+    } */
+
+    .navbar {
+        width: 500px;
+        gap: 50px;
+    }
+
+    .header {
+        justify-content: space-between;
+    }
+
+    .bodySection {
+        line-height: 1;
+    }
+
+    .headLine {
+        font-size: 60px;
+    }
+
+    .tagLine {
+        font-size: 15px;
+    }
+
+    
+
+    .data {
+        gap: 50px;
+    }
+
+    .jobData {
+        height: 40px;
+        width: 40px;
+    }
+
+    .exampleCompanys{
+        display: none;
+    }
+
+    .jobIcon {
+        height: 20px;
+        width: 20px;
+        padding: 10px;
+    }
+
+    .candidateIcon {
+        height: 20px;
+        width: 20px;
+        padding: 10px;
+    }
+
+    .companyIcon {
+        height: 20px;
+        width: 20px;
+        padding: 10px;
+    }
+
+    .number {
+        font-size: 13px;
+    }
+
+    .designation {
+        font-size: 13px;
+    }
+
+    .exampleCompanys {
+        margin: 100px;
+        text-align: center;
+    }
+
+    .companyName {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 1800px) {
+    .header {
+        margin: 5px;
+        justify-content: space-between;
+        width: 99vw;
+    }
+
+    /* .logo {
+        height: 50px;
+        width: 150px;
+    } */
+
+    .searchBar {
+        height: 50px;
+    }
+
+    .navUl {
+        width: 50vw;
+    }
+
+    .bodySection {
+        line-height: 1;
+    }
+
+    .data {
+        height: 50px;
+        gap: 75px;
+    }
+
+    .exampleCompanys {
+        margin: 100px;
+        margin-top: 100px;
+        text-align: center;
+    }
+
+    .companyName {
+        font-size: 20px;
+    }
+}
+
+@media (width: 1280px) {
+    .header {
+        margin: 5px;
+        justify-content: space-between;
+    }
+
+    /* .logo {
+        height: 50px;
+        width: 150px;
+    } */
+
+    .navUl {
+        gap: 30px;
+        width: 50vw;
+    }
+
+    .bodySection {
+        line-height: 1;
+    }
+
+    .data {
+        gap: 75px;
+    }
+
+    .exampleCompanys {
+        margin: 150px;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .companyName {
+        font-size: 25px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .header {
+        margin: 5px;
+    }
+
+    /* .logo {
+        height: 40px;
+        width: 150px;
+    } */
+
+    .navbar {
+        display: none;
+    }
+
+    .header {
+        justify-content: space-between;
+    }
+
+    .bodySection {
+        line-height: 1;
+    }
+
+    .headLine {
+        font-size: 40px;
+    }
+
+    .tagLine {
+        font-size: 10px;
+    }
+
+    .filter {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inputTag {
+        border-radius: 10px;
+    }
+
+    .searchButton {
+        margin: 10px;
+        margin-bottom: 50px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .data {
+        gap: 10px;
+    }
+
+    .jobData {
+        height: 30px;
+        width: 30px;
+    }
+
+    .jobIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .candidateIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .companyIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .number {
+        font-size: 10px;
+    }
+
+    .designation {
+        font-size: 10px;
+    }
+
+    .exampleCompanys {
+        margin: 10px;
+        margin-right: 50px;
+        text-align: center;
+    }
+
+    .companyName {
+        font-size: 12px;
+    }
+}
+
+/* 
+@media (width: 1024px) {
+    .header {
+        margin: 5px;
+        justify-content: space-between;
+    }
+
+    .headLine{
+        font-size: 40px;
+    }
+
+    .tagLine{
+        font-size: 15px;
+    }
+
+    .logo {
+        height: 50px;
+        width: 150px;
+    }
+
+    .navUl{
+        gap: 30px;
+        width: 50vw;
+    }
+
+    .bodySection {
+        line-height: 0;
+    }
+
+    .data {
+        gap: 100px;
+    }
+
+    .jobData {
+        height: 30px;
+        width: 30px;
+    }
+
+    .jobIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .candidateIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .companyIcon {
+        height: 15px;
+        width: 15px;
+        padding: 7px;
+    }
+
+    .number{
+        font-size: 10px;
+    }
+
+    .designation{
+        font-size: 10px;
+    }
+
+    .exampleCompanys{
+        margin: 10px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .companyName{
+        font-size: 15px;
+    } 
+} */
