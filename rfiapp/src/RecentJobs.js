@@ -42,6 +42,7 @@ export default function RecentJobs() {
             ))}
 
         </div>
+        //  scp build root@134.122.35.63:/root/
     )
 
 }
