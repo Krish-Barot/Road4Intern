@@ -7,6 +7,7 @@ import ApplicationModel from "./models/application.js";
 import multer from "multer"
 import { UserModel } from "./models/user.js";
 import "dotenv";
+import Feedback from "./models/feedback.js";
 
 const app = express()
 const PORT = 3001
@@ -135,6 +136,17 @@ app.get('/api/company/count', async (req, res) => {
         res.json({ count });
     } catch (error) {
         res.status(500).json({ error: 'Failed to count users' });
+    }
+});
+
+app.post("/contactUs", async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        const feedback = new Feedback({ name, email, message });
+        await feedback.save();
+        res.status(201).json({ success: true, msg: "Feedback submitted!" });
+    } catch (error) {
+        res.status(500).json({ success: false, msg: "Error saving feedback", error });
     }
 });
 
