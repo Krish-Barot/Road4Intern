@@ -28,7 +28,7 @@ export default function Homepage({ user }) {
         if (location) params.append('location', location);
         if (positionName) params.append('positionName', positionName)
 
-        const url = `http://localhost:3001/filteredJobs?${params.toString()}`;
+        const url = `http://road4intern.me/api/filteredJobs?${params.toString()}`;
 
         const res = await fetch(url);
         const data = await res.json();

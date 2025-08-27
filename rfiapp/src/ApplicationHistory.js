@@ -14,7 +14,7 @@ export default function ApplicationHistory({ user }) {
         async function fetchHistory() {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:3001/application-history/${user._id}`);
+                const res = await fetch(`http://road4intern.me/api/application-history/${user._id}`);
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
                 console.log("Applications fetched:", data);

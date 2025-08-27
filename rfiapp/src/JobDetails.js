@@ -23,7 +23,7 @@ export default function JobDetails({ user }) {
     }
 
     async function fetchingData() {
-        const response = await fetch(`http://localhost:3001/jobdetails/${id}`);
+        const response = await fetch(`http://road4intern.me/api/jobdetails/${id}`);
         const data = await response.json()
         setJobData(data)
     }

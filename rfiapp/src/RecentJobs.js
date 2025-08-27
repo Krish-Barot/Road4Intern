@@ -6,7 +6,7 @@ export default function RecentJobs() {
 
     const [jobData, setJobData] = useState([])
     async function fetchingData() {
-        const response = await fetch("http://localhost:3001/data");
+        const response = await fetch("http://road4intern.me/api/data");
         const data = await response.json()
         setJobData(data)
     }
