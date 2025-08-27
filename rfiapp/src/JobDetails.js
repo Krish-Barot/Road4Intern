@@ -52,7 +52,7 @@ export default function JobDetails({ user }) {
                         <li><Link to="/jobs" className='navCompo'>Jobs</Link></li>
                         <li><Link to="/application-history/:userId" className='navCompo'>Application History</Link></li>
                         <li><Link to="/about" className='navCompo'>About Us</Link></li>
-                        <li><Link to="/contact" className='navCompo'>Contact Us</Link></li>
+                        <li><Link to="/contactUs" className='navCompo'>Contact Us</Link></li>
                     </ul>
                 </div>
                 <div className='signInUp'>

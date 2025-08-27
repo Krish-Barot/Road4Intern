@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import './AboutUs.css'
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function AboutUs({ user }) {
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const navigate = useNavigate()
 
@@ -18,20 +20,28 @@ export default function AboutUs({ user }) {
     }
     return (
         <div className='homepages'>
-            <div className="heading">
+            <div className="header">
+                <button
+                    className="hamburger"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    ☰
+                </button>
+
                 <div>
                     <h2 className='name'>Road4Intern</h2>
                 </div>
-                <div className='navbar'>
+
+                <div className={`navbar ${menuOpen ? "open" : ""}`}>
                     <ul className='navUl'>
-                       <li><Link to="/" className='navCompo'>Home</Link></li>
+                        <li><Link to="/" className='navCompo'>Home</Link></li>
                         <li><Link to="/jobs" className='navCompo'>Jobs</Link></li>
                         <li><Link to="/application-history/:userId" className='navCompo'>Application History</Link></li>
                         <li><Link to="/about" className='navCompo'>About Us</Link></li>
-                        <li><Link to="/contact" className='navCompo'>Contact Us</Link></li>
+                        <li><Link to="/contactUs" className='navCompo'>Contact Us</Link></li>
                     </ul>
                 </div>
-               <div className='signInUp'>
+                <div className='signInUp'>
                     <div className='user-container'>
                         {user ? <p className='userName'>Welcome, {user.name || "User"}</p> : null}
                     </div>

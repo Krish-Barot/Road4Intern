@@ -1,95 +1,333 @@
-/* ApplicationHistory.css */
-
-.history {
-    margin: auto;
-    padding: 1rem;
-    font-family: Arial, sans-serif;
+.application-history-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     background-color: black;
-    color: white;
-    width: 100vw;
-    height: 100vh;
+
 }
 
-.history h2 {
-    text-align: center;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.name {
+    color: white;
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+}
+
+.navCompo {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navCompo:hover {
+    color: rgb(0, 195, 133);
+}
+
+.signInUp {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userName {
+    margin-right: 1rem;
+    color: white;
+    text-align: center;
+}
+
+.ul2 {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+}
+
+.toLogIn,
+.register,
+.logoutBtn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.toLogIn {
+    background-color: transparent;
+    border: 1px solid rgb(0, 195, 133);
+    color: rgb(0, 195, 133);
+}
+
+.toLogIn:hover {
+    background-color: rgb(0, 131, 89);
+}
+
+.register {
+    background-color: rgb(0, 195, 133);
+    color: white;
+}
+
+.register:hover {
+    background-color: rgb(1, 139, 95);
+}
+
+.logoutBtn {
+    background-color: rgb(0, 195, 133);
+    color: white;
+}
+
+.logoutBtn:hover {
+    background-color: rgb(0, 138, 95);
+}
+
+.history-container {
+    flex: 1;
+    margin: 0 auto;
+    width: 100vw;
+    background-color: black;
+}
+
+.history-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
     color: #333;
 }
 
-.history ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.loading,
+.error {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
 }
 
-.history li {
-    background: #f8f9fa;
-    margin-bottom: 0.8rem;
-    padding: 1rem;
+.error {
+    color: #e53e3e;
+}
+
+.applications-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 20px
+}
+
+.application-card {
+    background: #fff;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
 }
 
-.history li:hover {
+.application-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
-.history strong {
-    font-size: 1.1rem;
+.application-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
     color: #222;
 }
 
-.history em {
+.company {
     color: #666;
+    margin-bottom: 0.8rem;
     font-style: italic;
 }
 
-.history p {
-    margin-top: 0.4rem;
+.application-date {
+    color: #555;
     font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #edf2f7;
+    color: #4a5568;
+}
+
+.no-applications {
+    text-align: center;
+    padding: 3rem;
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.no-applications p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
     color: #555;
 }
 
-/* Responsive Styles */
+.browse-jobs-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: rgb(0, 195, 133);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.browse-jobs-btn:hover {
+    background-color: rgb(0, 149, 102);
+}
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .hamburger {
+        display: block;
+        z-index: 1001;
+    }
+
+    .navbar {
+        display: none;
+        width: 100%;
+        background: black;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        margin-top: 10px;
+    }
+
+    .navbar.open {
+        display: flex;
+        animation: slideDown 0.1s ease-in-out;
+    }
+
+    .navUl {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .navUl li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navCompo {
+        display: block;
+        padding: 12px 0;
+        width: 100%;
+        color: white;
+        font-size: 16px;
+    }
+
+    .navCompo:hover {
+        background: #222;
+        color: rgb(0, 195, 133);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 900px) {
+    .header {
+        /* flex-direction: column; */
+        padding: 1rem;
+    }
+
+    .navbar ul {
+        margin: 1rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .applications-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
-    .history {
-        padding: 0.8rem;
+    .history-container {
+        padding: 1rem;
     }
 
-    .history h2 {
-        font-size: 1.5rem;
+    .history-container h2 {
+        font-size: 1.6rem;
     }
 
-    .history li {
-        padding: 0.8rem;
+    .applications-list {
+        grid-template-columns: 1fr;
     }
 
-    .history strong {
-        font-size: 1rem;
+    .signInUp {
+        /* flex-direction: column; */
+        gap: 0.5rem;
     }
 
-    .history p {
-        font-size: 0.85rem;
+    .userName {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
     }
 }
 
 @media (max-width: 480px) {
-    .history h2 {
-        font-size: 1.3rem;
+    .name {
+        font-size: 1.5rem;
     }
 
-    .history li {
-        padding: 0.6rem;
+    .navUl {
+        gap: 0.8rem;
     }
 
-    .history strong {
-        font-size: 0.95rem;
+    .navCompo {
+        font-size: 0.9rem;
     }
 
-    .history p {
-        font-size: 0.8rem;
+    .application-card {
+        padding: 1rem;
+    }
+
+    .application-card h3 {
+        margin-top: 40px;
+        font-size: 1.1rem;
     }
 }

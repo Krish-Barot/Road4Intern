@@ -3,7 +3,7 @@
     height: 100vh;
 }
 
-.name{
+.name {
     color: white;
     font-size: 25px;
 }
@@ -41,13 +41,13 @@
     cursor: pointer;
 }
 
-.signInUp{
+.signInUp {
     display: flex;
     color: white;
     gap: 10px;
 }
 
-.user-container{
+.user-container {
     background-color: rgba(128, 128, 128, 0.5);
     border-radius: 10px;
     padding: 5px;
@@ -120,6 +120,12 @@
     text-align: center;
 }
 
+.searchBar {
+        display: flex;
+        flex-direction: column;
+        height: 50px;
+    }
+
 .filter {
     display: flex;
     justify-content: center;
@@ -156,8 +162,8 @@
     display: flex;
     justify-content: center;
     width: 90vw;
-    margin: 40px auto;
-    gap: 200px;
+    margin: 100px auto;
+    justify-content: space-evenly;
 }
 
 .jobData {
@@ -227,26 +233,53 @@
     cursor: pointer;
 }
 
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .hamburger {
+    display: block; 
+  }
+
+  .navbar {
+    display: none; 
+    width: 100%;
+    background: black;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .navbar.open {
+    display: flex; 
+  }
+
+  .navUl {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+  }
+}
+
+
 @media (max-width: 800px) {
-    .homepage{
+    .homepage {
         width: 49rem;
     }
+
     .header {
         margin: 5px;
+        justify-content: space-between;
     }
-/* 
-    .logo {
-        height: 50px;
-        width: 175px;
-    } */
 
     .navbar {
-        width: 500px;
-        gap: 50px;
-    }
-
-    .header {
-        justify-content: space-between;
+        display: none;
     }
 
     .bodySection {
@@ -254,14 +287,12 @@
     }
 
     .headLine {
-        font-size: 60px;
+        font-size: 20px;
     }
 
     .tagLine {
         font-size: 15px;
     }
-
-    
 
     .data {
         gap: 50px;
@@ -272,7 +303,7 @@
         width: 40px;
     }
 
-    .exampleCompanys{
+    .exampleCompanys {
         display: none;
     }
 
@@ -312,19 +343,19 @@
     }
 }
 
-@media (min-width: 801px) and (max-width: 1800px) {
+@media (min-width: 801px) and (max-width: 1400px) {
     .header {
         margin: 5px;
         justify-content: space-between;
-        width: 99vw;
     }
 
-    /* .logo {
-        height: 50px;
-        width: 150px;
-    } */
+    .navbar {
+        display: none;
+    }
 
     .searchBar {
+        display: flex;
+        flex-direction: column;
         height: 50px;
     }
 
@@ -398,10 +429,6 @@
         width: 150px;
     } */
 
-    .navbar {
-        display: none;
-    }
-
     .header {
         justify-content: space-between;
     }
@@ -419,8 +446,10 @@
     }
 
     .filter {
+        display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 15px;
     }
 
     .inputTag {
@@ -479,78 +508,3 @@
         font-size: 12px;
     }
 }
-
-/* 
-@media (width: 1024px) {
-    .header {
-        margin: 5px;
-        justify-content: space-between;
-    }
-
-    .headLine{
-        font-size: 40px;
-    }
-
-    .tagLine{
-        font-size: 15px;
-    }
-
-    .logo {
-        height: 50px;
-        width: 150px;
-    }
-
-    .navUl{
-        gap: 30px;
-        width: 50vw;
-    }
-
-    .bodySection {
-        line-height: 0;
-    }
-
-    .data {
-        gap: 100px;
-    }
-
-    .jobData {
-        height: 30px;
-        width: 30px;
-    }
-
-    .jobIcon {
-        height: 15px;
-        width: 15px;
-        padding: 7px;
-    }
-
-    .candidateIcon {
-        height: 15px;
-        width: 15px;
-        padding: 7px;
-    }
-
-    .companyIcon {
-        height: 15px;
-        width: 15px;
-        padding: 7px;
-    }
-
-    .number{
-        font-size: 10px;
-    }
-
-    .designation{
-        font-size: 10px;
-    }
-
-    .exampleCompanys{
-        margin: 10px;
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    .companyName{
-        font-size: 15px;
-    } 
-} */

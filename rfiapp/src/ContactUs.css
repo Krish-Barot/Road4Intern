@@ -1,0 +1,179 @@
+/* Contact Section Container */
+.ContactContainer {
+    display: flex;
+    width: 90%;
+    margin: 20px auto;
+    padding: 40px 20px;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+/* Images */
+.internshipImg, .myImg {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Text Section */
+.aboutRoad4Intern {
+    text-align: justify;
+    line-height: 1.8;
+    flex: 1;
+    min-width: 280px;
+}
+
+/* Contact Form */
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 280px;
+    gap: 15px;
+}
+
+.contactForm label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.contactForm input,
+.contactForm textarea {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+}
+
+.sendBtn {
+    padding: 14px;
+    background: #2b6cb0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.sendBtn:hover {
+    background: #1a4e80;
+}
+
+
+.hamburger {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .hamburger {
+        display: block;
+        z-index: 1001;
+    }
+
+    .navbar {
+        display: none;
+        width: 100%;
+        background: black;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        margin-top: 10px;
+    }
+
+    .navbar.open {
+        display: flex;
+        animation: slideDown 0.1s ease-in-out;
+    }
+
+    .navUl {
+        flex-direction: column;
+        gap: 15px;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .navUl li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navCompo {
+        display: block;
+        padding: 12px 0;
+        width: 100%;
+        color: white;
+        font-size: 16px;
+    }
+
+    .navCompo:hover {
+        background: #222;
+        color: rgb(0, 195, 133);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+@media screen and (max-width: 900px) {
+    .Aboutcontainer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .aboutRoad4Intern {
+        text-align: center;
+    }
+
+    .myImg, .internshipImg {
+        max-width: 90%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+
+    .navbar.active {
+        display: block;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: white;
+        width: 220px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        padding: 20px;
+        z-index: 1000;
+    }
+
+    .navUl {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

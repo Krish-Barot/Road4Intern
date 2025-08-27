@@ -11,20 +11,13 @@ import AboutUs from './AboutUs';
 import { useEffect, useState } from 'react';
 import ApplicationHistory from './ApplicationHistory';
 import { jwtDecode } from 'jwt-decode';
+import ContactUs from './ContactUs';
+
 
 function App() {
   const [user, setUser] = useState(null);
-  // useEffect(() => {
-  //   const handleStorageChange = () => {
-  //     setUser(localStorage.getItem("token"));
-  //   };
+  const [loading, setLoading] = useState(true);
 
-  //   window.addEventListener("storage", handleStorageChange);
-
-  //   return () => {
-  //     window.removeEventListener("storage", handleStorageChange);
-  //   };
-  // }, []);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -37,35 +30,39 @@ function App() {
         setUser(null);
       }
     }
+    setLoading(false); 
   }, []);
+
+  if (loading) {
+    return <p>Loading...</p>; 
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-       
         <Routes>
-          {user && (
-            <Route path="/" element={
-              <>
-                <Homepage user={user} />
-                <RecentJobs />
-              </>
-            }
+          {user ? (
+            <Route
+              path="/"
+              element={
+                <>
+                  <Homepage user={user} />
+                  <RecentJobs />
+                </>
+              }
             />
+          ) : (
+            <Route path="/" element={<Navigate replace to="/login" />} />
           )}
-          <Route path='/jobs' element={<Jobs user={user} />} />
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/jobs" element={<Jobs user={user} />} />
           <Route path="/jobs/:id" element={<JobDetails user={user} />} />
-
-          {/* <Route path="/" element={<Navigate replace to="/login" />} /> */}
-          {!user && <Route path="/" element={<Navigate replace to="/login" />} />}
-
-          <Route path='/application' element={<Application user={user} />} />
-          <Route path='/about' element={<AboutUs user={user} />} />
+          <Route path="/application" element={<Application user={user} />} />
+          <Route path="/about" element={<AboutUs user={user} />} />
           <Route path="/application-history/:userId" element={<ApplicationHistory user={user} />} />
+          <Route path="/contactUs" element={<ContactUs user={user} />} />
         </Routes>
       </header>
     </div>
