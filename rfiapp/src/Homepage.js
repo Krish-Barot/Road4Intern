@@ -55,12 +55,12 @@ export default function Homepage({ user }) {
     }
 
     async function countCandidates() {
-        const data = await fetch("http://road4intern.me/api/users/count")
+        const data = await fetch("http://road4intern.me/api/api/users/count")
         const response = await data.json()
         return setCandidate(response.count)
     }
     async function countCompany() {
-        const data = await fetch("http://road4intern.me/api/company/count")
+        const data = await fetch("http://road4intern.me/api/api/company/count")
         const response = await data.json()
         return setcountCompanies(response.count)
     }
