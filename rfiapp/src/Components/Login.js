@@ -15,20 +15,6 @@ const Login = ({ setUser }) => {
         setData({ ...data, [input.name]: input.value })
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const url = "http://road4intern.me/loginapi/api/auth";
-    //         const response = await axios.post(url, data);
-    //         localStorage.setItem("token", response.data.token)
-    //         navigate("/");
-    //     } catch (error) {
-    //         if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-    //             setError(error.response.data.message)
-    //         }
-    //     }
-    // }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
