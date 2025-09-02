@@ -2,8 +2,11 @@ import express from 'express';
 import { UserModel } from '../../models/user.js';
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
+import cors from 'cors'
+
 
 const router = express.Router();
+router.use(cors());
 const validate = (data) => {
     const schema = Joi.object({
         email: Joi.string().email().required().label("Email"),

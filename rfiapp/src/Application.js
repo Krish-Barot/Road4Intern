@@ -45,7 +45,7 @@ export default function Application({ user }) {
         }
 
         try {
-            const response = await fetch("https://road4intern.me/api/application", {
+            const response = await fetch("http://localhost:3001/application", {
                 method: 'POST',
                 body: formData
             });

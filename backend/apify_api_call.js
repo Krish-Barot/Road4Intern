@@ -12,7 +12,8 @@ import Feedback from "./models/feedback.js";
 const app = express()
 const PORT = 3001
 app.use(express.json())
-app.use(cors());
+ app.use(cors());
+
 // connecting to DB
 connectDB();
 

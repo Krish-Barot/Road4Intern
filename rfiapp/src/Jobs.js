@@ -37,8 +37,8 @@ export default function Jobs({ user }) {
 
     async function fetchingData() {
         const endpoint = location.search
-            ? `https://road4intern.me/api/filteredJobs${location.search}`
-            : "https://road4intern.me/api/data";
+            ? `http://localhost:3001/filteredJobs${location.search}`
+            : "http://localhost:3001/data";
 
         const response = await fetch(endpoint);
         const data = await response.json();

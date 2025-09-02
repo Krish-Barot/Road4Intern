@@ -56,7 +56,7 @@ function App() {
           )}
 
           <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/jobs" element={<Jobs user={user} />} />
           <Route path="/jobs/:id" element={<JobDetails user={user} />} />
           <Route path="/application" element={<Application user={user} />} />

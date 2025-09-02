@@ -1,8 +1,11 @@
 import express from 'express';
 import { validate, UserModel } from '../../models/user.js';
 import bcrypt from 'bcrypt';
+import cors from 'cors';
+
 
 const router = express.Router();
+router.use(cors());
 
 router.post("/", async (req, res) => {
     try {

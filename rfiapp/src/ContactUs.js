@@ -26,7 +26,7 @@ export default function ContactUs({ user }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await fetch("https://road4intern.me/api/contactUs", {
+            const res = await fetch("http://localhost:3001/contactUs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, message }),
