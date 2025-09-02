@@ -1,13 +1,13 @@
 import { ApifyClient } from "apify-client";
-import connectDB from "./db.js";
-import internship from './models/internshipModel.js'
+import connectDB from "../db.js";
+import internship from '../models/internshipModel.js'
 import express from 'express'
 import cors from "cors";
-import ApplicationModel from "./models/application.js";
+import ApplicationModel from "../models/application.js";
 import multer from "multer"
-import { UserModel } from "./models/user.js";
+import { UserModel } from "../models/user.js";
 import "dotenv";
-import Feedback from "./models/feedback.js";
+import Feedback from "../models/feedback.js";
 
 const app = express()
 const PORT = 3001
