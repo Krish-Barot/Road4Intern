@@ -17,8 +17,8 @@ app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
 
 const PORT = 3000
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
-
-// app.listen(PORT, () =>{
-//     console.log(`Server running on ${PORT}`)
-// })
+app.listen(PORT, () =>{
+    console.log(`Server running on ${PORT}`)
+})
