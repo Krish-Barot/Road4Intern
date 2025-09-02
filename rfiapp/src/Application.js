@@ -45,7 +45,7 @@ export default function Application({ user }) {
         }
 
         try {
-            const response = await fetch("http://localhost:3001/application", {
+            const response = await fetch("http://134.122.35.63:5001/application", {
                 method: 'POST',
                 body: formData
             });

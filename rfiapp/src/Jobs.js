@@ -37,8 +37,8 @@ export default function Jobs({ user }) {
 
     async function fetchingData() {
         const endpoint = location.search
-            ? `http://localhost:3001/filteredJobs${location.search}`
-            : "http://localhost:3001/data";
+            ? `http://134.122.35.63:5001/filteredJobs${location.search}`
+            : "http://134.122.35.63:5001/data";
 
         const response = await fetch(endpoint);
         const data = await response.json();

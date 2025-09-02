@@ -28,7 +28,7 @@ export default function Homepage({ user }) {
         if (location) params.append('location', location);
         if (positionName) params.append('positionName', positionName)
 
-        const url = `http://localhost:3001/filteredJobs?${params.toString()}`;
+        const url = `http://134.122.35.63:5001/filteredJobs?${params.toString()}`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -55,12 +55,12 @@ export default function Homepage({ user }) {
     }
 
     async function countCandidates() {
-        const data = await fetch("http://localhost:3001/api/users/count")
+        const data = await fetch("http://134.122.35.63:5001/api/users/count")
         const response = await data.json()
         return setCandidate(response.count)
     }
     async function countCompany() {
-        const data = await fetch("http://localhost:3001/api/company/count")
+        const data = await fetch("http://134.122.35.63:5001/api/company/count")
         const response = await data.json()
         return setcountCompanies(response.count)
     }
