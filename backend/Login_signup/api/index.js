@@ -19,6 +19,6 @@ app.use("/api/auth", authRoutes)
 const PORT = 3000
 
 
-app.listen(PORT, () =>{
-    console.log(`Server running on ${PORT}`)
-})
+// app.listen(PORT, () =>{
+//     console.log(`Server running on ${PORT}`)
+// })
