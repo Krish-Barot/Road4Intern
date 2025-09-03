@@ -273,11 +273,6 @@
         width: 49rem;
     }
 
-    .header {
-        margin: 5px;
-        justify-content: space-between;
-    }
-
     .navbar {
         display: none;
     }
@@ -345,7 +340,6 @@
 
 @media (min-width: 801px) and (max-width: 1400px) {
     .header {
-        margin: 5px;
         justify-content: space-between;
     }
 
@@ -385,7 +379,6 @@
 
 @media (width: 1280px) {
     .header {
-        margin: 5px;
         justify-content: space-between;
     }
 
@@ -420,14 +413,6 @@
 
 
 @media (max-width: 600px) {
-    .header {
-        margin: 5px;
-    }
-
-    /* .logo {
-        height: 40px;
-        width: 150px;
-    } */
 
     .header {
         justify-content: space-between;

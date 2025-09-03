@@ -29,7 +29,7 @@
 }
 
 .navCompo {
-  color: grey;
+  color: rgb(126, 126, 126);
   text-decoration: none;
 }
 
@@ -75,7 +75,7 @@
   flex-direction: column;
   color: white;
   width: 100vw;
-  margin: 75px auto;
+  margin: 125px auto;
   line-height: 0.5;
 }
 
