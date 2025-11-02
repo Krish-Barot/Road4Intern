@@ -1,7 +1,7 @@
 // API Configuration
 // Use environment variable in production, localhost in development
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://road4-intern.vercel.app';
-const JOBS_API_BASE_URL = process.env.REACT_APP_JOBS_API_URL || 'https://road4-intern.vercel.app';
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+const JOBS_API_BASE_URL = process.env.REACT_APP_JOBS_API_URL;
 
 export const API_ENDPOINTS = {
   // Auth endpoints
