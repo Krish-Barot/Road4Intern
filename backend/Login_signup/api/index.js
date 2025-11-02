@@ -19,10 +19,24 @@ const __dirname = dirname(__filename);
 
 const app = express()
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+  origin: '*', // Allow all origins in production
+  credentials: true
+}));
 
-// connecting to DB
-connectDB();
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({ 
+    message: 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// connecting to DB (non-blocking)
+connectDB().catch(err => {
+  console.error('Database connection error:', err);
+});
 
 // Auth routes
 app.use("/api/users", userRoutes)
@@ -32,11 +46,14 @@ app.use("/api/auth", authRoutes)
 // Get all jobs
 app.get('/data', async (req, res) => {
     try {
-        const data = await internship.find();
+        const data = await internship.find().limit(100); // Limit to prevent timeout
         res.json(data);
     } catch (err) {
-        console.log(err);
-        res.status(500).send("Internal Server Error");
+        console.error('Error fetching jobs:', err);
+        res.status(500).json({ 
+            message: "Internal Server Error",
+            error: err.message 
+        });
     }
 });
 
@@ -144,7 +161,15 @@ app.post("/contactUs", async (req, res) => {
 });
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
-app.get("/api", (req, res) => res.send("API is working"));
+app.get("/api", (req, res) => res.json({ 
+    message: "API is working",
+    endpoints: {
+        auth: "/api/auth",
+        users: "/api/users",
+        jobs: "/data",
+        filteredJobs: "/filteredJobs"
+    }
+}));
 
 // For local development
 const PORT = process.env.PORT || 3000;

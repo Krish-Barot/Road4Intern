@@ -31,8 +31,13 @@ const Login = ({ setUser }) => {
 
             navigate("/");
         } catch (error) {
+            console.error('Login error:', error);
             if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-                setError(error.response.data.message)
+                setError(error.response.data?.message || 'Login failed. Please check your credentials.');
+            } else if (error.request) {
+                setError('Network error. Please check your connection.');
+            } else {
+                setError('An error occurred. Please try again.');
             }
         } finally {
             setLoading(false);
