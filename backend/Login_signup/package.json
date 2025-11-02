@@ -16,7 +16,8 @@
     "joi": "^17.13.3",
     "joi-password-complexity": "^5.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "@vercel/node": "^2.15.8"
