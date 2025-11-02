@@ -6,9 +6,26 @@ export default function RecentJobs() {
 
     const [jobData, setJobData] = useState([])
     async function fetchingData() {
-        const response = await fetch("http://134.122.35.63:5001/data");
-        const data = await response.json()
-        setJobData(data)
+        try {
+            const response = await fetch("http://localhost:3001/data");
+            const data = await response.json();
+            console.log("Fetched data:", data);
+            
+            // Handle different response formats
+            let jobs = [];
+            if (Array.isArray(data)) {
+                jobs = data;
+            } else if (data && Array.isArray(data.data)) {
+                jobs = data.data;
+            } else if (data && data.success && Array.isArray(data.data)) {
+                jobs = data.data;
+            }
+            
+            setJobData(jobs);
+        } catch (error) {
+            console.error("Error fetching jobs:", error);
+            setJobData([]);
+        }
     }
     useEffect(() => {
         fetchingData();
@@ -18,7 +35,7 @@ export default function RecentJobs() {
         <div className="jobcard1">
             <h1>Recents Jobs Available</h1>
             <hr></hr>
-            {jobData.slice(0, 5).map((job, i) => (
+            {Array.isArray(jobData) && jobData.slice(0, 5).map((job, i) => (
                 <div key={i} className="jobcard2">
                     <h2 className="title">{job.positionName}</h2>
                     <h3 className="company">{job.company}</h3>
@@ -40,6 +57,9 @@ export default function RecentJobs() {
                     </div>
                 </div>
             ))}
+            {(!Array.isArray(jobData) || jobData.length === 0) && (
+                <p>No jobs available at the moment.</p>
+            )}
 
         </div>
         //  scp build root@134.122.35.63:/root/

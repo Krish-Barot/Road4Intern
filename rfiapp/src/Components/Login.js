@@ -19,7 +19,7 @@ const Login = ({ setUser }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const url = "http://134.122.35.63:5000/api/auth";
+            const url = "http://localhost:3000/api/auth";
             const response = await axios.post(url, data);
 
             const token = response.data.token;

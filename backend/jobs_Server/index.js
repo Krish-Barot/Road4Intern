@@ -1,13 +1,20 @@
 import { ApifyClient } from "apify-client";
-import connectDB from "../Login_signup/db.js";
-import internship from '../models/internshipModel.js'
+import connectDB from "../Login_signup/api/db.js";
+import internship from '../Login_signup/api/models/internshipModel.js'
 import express from 'express'
 import cors from "cors";
-import ApplicationModel from "../models/application.js";
+import ApplicationModel from "../Login_signup/api/models/application.js";
 import multer from "multer"
-import { UserModel } from "../models/user.js";
-import "dotenv";
-import Feedback from "../models/feedback.js";
+import { UserModel } from "../Login_signup/api/models/user.js";
+import dotenv from "dotenv";
+import Feedback from "../Login_signup/api/models/feedback.js";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express()
 const PORT = 3001
@@ -17,26 +24,47 @@ app.use(express.json())
 // connecting to DB
 connectDB();
 
-const client = new ApifyClient({
-    token: process.env.token
-})
-
-// Get the dataset
-const dataset = client.dataset('hJns9gAndkEPbwBYA');
-
-// Fetch results from the actor's dataset
-const { items } = await dataset.listItems();
-
-
-for (const item of items) {
-    const { positionName, company, location, salary, description, isExpired, date_of_post } = item;
-
+// Function to sync jobs from Apify (optional - can be called manually or via route)
+async function syncJobsFromApify() {
     try {
-        const intern = new internship({ positionName, company, location, salary, description, isExpired, date_of_post })
-        await intern.save()
-    }
-    catch (err) {
-        console.log(err)
+        if (!process.env.token) {
+            console.log("Apify token not found. Skipping job sync.");
+            return;
+        }
+
+        const client = new ApifyClient({
+            token: process.env.token
+        });
+
+        // Get the dataset
+        const dataset = client.dataset('hJns9gAndkEPbwBYA');
+
+        // Fetch results from the actor's dataset
+        const { items } = await dataset.listItems();
+
+        for (const item of items) {
+            const { positionName, company, location, salary, description, isExpired, date_of_post } = item;
+
+            try {
+                // Check if job already exists
+                const existing = await internship.findOne({ 
+                    positionName, 
+                    company, 
+                    date_of_post 
+                });
+                
+                if (!existing) {
+                    const intern = new internship({ positionName, company, location, salary, description, isExpired, date_of_post })
+                    await intern.save()
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+        console.log("Jobs synced from Apify successfully");
+    } catch (error) {
+        console.error("Error syncing jobs from Apify:", error);
     }
 }
 
@@ -68,7 +96,8 @@ app.get('/jobdetails/:id', async (req, res) => {
 // Data to application
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        return cb(null, "./rfiapp/src/uploads/")
+        const uploadsPath = join(__dirname, '../../rfiapp/src/uploads/');
+        return cb(null, uploadsPath)
     },
     filename: function (req, file, cb) {
         return cb(null, `${Date.now()} - ${file.originalname}`)
@@ -152,6 +181,14 @@ app.post("/contactUs", async (req, res) => {
 });
 
 
-app.listen(PORT, () => {
+// Route to manually sync jobs (optional)
+app.post('/sync-jobs', async (req, res) => {
+    await syncJobsFromApify();
+    res.json({ message: 'Job sync initiated' });
+});
+
+app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
+    // Optionally sync jobs on startup (commented out to avoid blocking)
+    // await syncJobsFromApify();
 });

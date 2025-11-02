@@ -36,13 +36,29 @@ export default function Jobs({ user }) {
     }
 
     async function fetchingData() {
-        const endpoint = location.search
-            ? `http://134.122.35.63:5001/filteredJobs${location.search}`
-            : "http://134.122.35.63:5001/data";
+        try {
+            const endpoint = location.search
+                ? `http://localhost:3001/filteredJobs${location.search}`
+                : "http://localhost:3001/data";
 
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        setJobData(data);
+            const response = await fetch(endpoint);
+            const data = await response.json();
+            
+            // Handle different response formats
+            let jobs = [];
+            if (Array.isArray(data)) {
+                jobs = data;
+            } else if (data && Array.isArray(data.data)) {
+                jobs = data.data;
+            } else if (data && data.success && Array.isArray(data.data)) {
+                jobs = data.data;
+            }
+            
+            setJobData(jobs);
+        } catch (error) {
+            console.error("Error fetching jobs:", error);
+            setJobData([]);
+        }
     }
 
     useEffect(() => {
@@ -120,7 +136,7 @@ export default function Jobs({ user }) {
 
             <div className="results">
                 <h1 className="head">Jobs Listed</h1>
-                {jobData.map((job, i) => (
+                {Array.isArray(jobData) && jobData.length > 0 ? jobData.map((job, i) => (
                     <div key={i} className="jobcard2">
                         <h2 className="title">{job.positionName}</h2>
                         <h3 className="company">{job.company}</h3>
@@ -146,7 +162,9 @@ export default function Jobs({ user }) {
                             </button>
                         </div>
                     </div>
-                ))}
+                )) : (
+                    <p>No jobs found.</p>
+                )}
             </div>
         </div>
     );

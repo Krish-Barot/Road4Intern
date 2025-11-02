@@ -23,16 +23,32 @@ export default function Homepage({ user }) {
     }
 
     async function fetchData() {
-        const params = new URLSearchParams();
-        if (company) params.append('company', company);
-        if (location) params.append('location', location);
-        if (positionName) params.append('positionName', positionName)
+        try {
+            const params = new URLSearchParams();
+            if (company) params.append('company', company);
+            if (location) params.append('location', location);
+            if (positionName) params.append('positionName', positionName)
 
-        const url = `http://134.122.35.63:5001/filteredJobs?${params.toString()}`;
+            const url = `http://localhost:3001/filteredJobs?${params.toString()}`;
 
-        const res = await fetch(url);
-        const data = await res.json();
-        setJob(data);
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            // Handle different response formats
+            let jobs = [];
+            if (Array.isArray(data)) {
+                jobs = data;
+            } else if (data && Array.isArray(data.data)) {
+                jobs = data.data;
+            } else if (data && data.success && Array.isArray(data.data)) {
+                jobs = data.data;
+            }
+            
+            setJob(jobs);
+        } catch (error) {
+            console.error("Error fetching jobs:", error);
+            setJob([]);
+        }
     }
     useEffect(() => {
         fetchData();
@@ -55,12 +71,12 @@ export default function Homepage({ user }) {
     }
 
     async function countCandidates() {
-        const data = await fetch("http://134.122.35.63:5001/api/users/count")
+        const data = await fetch("http://localhost:3001/api/users/count")
         const response = await data.json()
         return setCandidate(response.count)
     }
     async function countCompany() {
-        const data = await fetch("http://134.122.35.63:5001/api/company/count")
+        const data = await fetch("http://localhost:3001/api/company/count")
         const response = await data.json()
         return setcountCompanies(response.count)
     }
@@ -128,7 +144,7 @@ export default function Homepage({ user }) {
                 <div className='container1'>
                     <p className='jobData'><img src='/images/jobIcon.png' className='jobIcon' alt='' /></p>
                     <div className='datas'>
-                        <p className='number'>{job.length}</p>
+                        <p className='number'>{Array.isArray(job) ? job.length : 0}</p>
                         <p className='designation'>Jobs</p>
                     </div>
                 </div>
