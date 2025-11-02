@@ -34,32 +34,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-// connecting to DB - ensure it's connected
-let dbReady = false;
+// connecting to DB - non-blocking, let requests proceed
 connectDB()
   .then(() => {
-    dbReady = true;
     console.log('Database connected successfully');
   })
   .catch(err => {
     console.error('Database connection error:', err);
-    dbReady = false;
   });
-
-// Middleware to check DB connection
-app.use((req, res, next) => {
-  if (req.path === '/health' || req.path === '/') {
-    return next();
-  }
-  
-  if (!dbReady && mongoose.connection.readyState !== 1) {
-    return res.status(503).json({ 
-      message: 'Database not connected. Please try again in a moment.',
-      dbStatus: mongoose.connection.readyState 
-    });
-  }
-  next();
-});
 
 // Auth routes
 app.use("/api/users", userRoutes)
@@ -186,6 +168,7 @@ app.post("/contactUs", async (req, res) => {
 app.get("/health", (req, res) => res.json({ 
     status: "ok",
     dbConnected: mongoose.connection.readyState === 1,
+    dbStatus: mongoose.connection.readyState,
     timestamp: new Date().toISOString()
 }));
 
@@ -193,6 +176,8 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 app.get("/api", (req, res) => res.json({ 
     message: "API is working",
     dbConnected: mongoose.connection.readyState === 1,
+    dbStatus: mongoose.connection.readyState,
+    note: "DB status: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting",
     endpoints: {
         auth: "/api/auth",
         users: "/api/users",

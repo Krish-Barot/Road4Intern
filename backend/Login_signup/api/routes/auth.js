@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { UserModel } from '../models/user.js';
 import Joi from 'joi';
 import bcrypt from 'bcryptjs'; // <-- changed from 'bcrypt'
@@ -29,6 +30,17 @@ router.post("/", async (req, res) => {
         const { error } = validate(req.body);
         if (error) {
             return res.status(400).json({ message: error.details[0]?.message || "Error in validating login" });
+        }
+
+        // Ensure DB is connected before querying
+        if (mongoose.connection.readyState !== 1) {
+            // Try to reconnect if not connected
+            try {
+                await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://dbUser:1234@cluster0.km502.mongodb.net/Road4Intern');
+            } catch (connErr) {
+                console.error('Failed to connect to DB:', connErr);
+                return res.status(503).json({ message: 'Database connection error. Please try again.' });
+            }
         }
 
         // Find user by email
