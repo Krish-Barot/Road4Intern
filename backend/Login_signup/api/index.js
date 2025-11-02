@@ -34,13 +34,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-// connecting to DB - non-blocking, let requests proceed
+// connecting to DB - start connection immediately
+// In serverless, connection happens on first request, but we start it here
 connectDB()
   .then(() => {
-    console.log('Database connected successfully');
+    console.log('✅ Database connection ready');
   })
   .catch(err => {
-    console.error('Database connection error:', err);
+    console.error('⚠️ Database connection error at startup:', err.message);
+    // Don't fail - let routes handle connection on demand
   });
 
 // Auth routes

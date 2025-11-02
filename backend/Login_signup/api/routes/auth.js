@@ -33,14 +33,36 @@ router.post("/", async (req, res) => {
         }
 
         // Ensure DB is connected before querying
-        if (mongoose.connection.readyState !== 1) {
-            // Try to reconnect if not connected
-            try {
-                await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://dbUser:1234@cluster0.km502.mongodb.net/Road4Intern');
-            } catch (connErr) {
-                console.error('Failed to connect to DB:', connErr);
-                return res.status(503).json({ message: 'Database connection error. Please try again.' });
+        let dbConnected = false;
+        try {
+            const connectDB = (await import('../db.js')).default;
+            await connectDB();
+            // Wait for connection to be ready
+            if (mongoose.connection.readyState === 1) {
+                dbConnected = true;
+            } else {
+                // Wait up to 3 seconds for connection
+                for (let i = 0; i < 30; i++) {
+                    if (mongoose.connection.readyState === 1) {
+                        dbConnected = true;
+                        break;
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
             }
+        } catch (connErr) {
+            console.error('Database connection failed in auth route:', connErr.message);
+            return res.status(503).json({ 
+                message: 'Database connection error. Please try again.',
+                error: connErr.message 
+            });
+        }
+
+        if (!dbConnected) {
+            return res.status(503).json({ 
+                message: 'Database connection timeout. Please try again.',
+                status: mongoose.connection.readyState 
+            });
         }
 
         // Find user by email
@@ -63,12 +85,13 @@ router.post("/", async (req, res) => {
         console.error("Login error details:", {
             message: error.message,
             stack: error.stack,
-            name: error.name
+            name: error.name,
+            readyState: mongoose.connection?.readyState
         });
-        // Return more detailed error in development
+        // Return error message
         return res.status(500).json({ 
             message: "Internal Server Error in auth",
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            error: error.message || 'Unknown error'
         });
     }
 });

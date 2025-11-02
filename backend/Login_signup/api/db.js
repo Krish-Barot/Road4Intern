@@ -1,48 +1,74 @@
 import mongoose from 'mongoose';
 
-let isConnected = false;
+// Global connection state
+let cachedConnection = null;
 
 const connectDB = async () => {
-    // If already connected, return existing connection
-    if (isConnected && mongoose.connection.readyState === 1) {
-        console.log("Using existing MongoDB connection");
+    // If already connected, return cached connection
+    if (cachedConnection && mongoose.connection.readyState === 1) {
         return mongoose.connection;
+    }
+
+    // If already trying to connect, wait for that connection
+    if (mongoose.connection.readyState === 2) {
+        // Wait up to 10 seconds for existing connection
+        for (let i = 0; i < 100; i++) {
+            if (mongoose.connection.readyState === 1) {
+                cachedConnection = mongoose.connection;
+                return mongoose.connection;
+            }
+            if (mongoose.connection.readyState === 0) {
+                // Connection failed, break and try again
+                break;
+            }
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
     }
 
     try {
         const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dbUser:1234@cluster0.km502.mongodb.net/Road4Intern';
         
-        // Connect with options for serverless environments
-        const db = await mongoose.connect(mongoURI, {
-            serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-            socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+        // Set connection options optimized for serverless
+        const options = {
+            serverSelectionTimeoutMS: 10000, // 10 seconds
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 10000,
+            maxPoolSize: 1,
+            minPoolSize: 0,
+            bufferCommands: false,
+            bufferMaxEntries: 0,
+        };
+
+        console.log('Attempting to connect to MongoDB...');
+        await mongoose.connect(mongoURI, options);
+        
+        // Verify connection is actually ready
+        if (mongoose.connection.readyState === 1) {
+            cachedConnection = mongoose.connection;
+            console.log("✅ Connected to MongoDB successfully");
+            return mongoose.connection;
+        } else {
+            throw new Error(`Connection state is ${mongoose.connection.readyState}, expected 1`);
+        }
+        
+    } catch (error) {
+        console.error('❌ MongoDB connection error:', {
+            message: error.message,
+            name: error.name,
+            code: error.code
         });
+        cachedConnection = null;
         
-        isConnected = true;
-        console.log("Connected to MongoDB");
+        // Reset connection state if it's stuck
+        if (mongoose.connection.readyState === 2) {
+            try {
+                await mongoose.disconnect();
+            } catch (e) {
+                // Ignore disconnect errors
+            }
+        }
         
-        // Handle connection events
-        mongoose.connection.on('error', (err) => {
-            console.error('MongoDB connection error:', err);
-            isConnected = false;
-        });
-        
-        mongoose.connection.on('disconnected', () => {
-            console.log('MongoDB disconnected');
-            isConnected = false;
-        });
-        
-        mongoose.connection.on('connected', () => {
-            console.log('MongoDB connected');
-            isConnected = true;
-        });
-        
-        return db.connection;
-    } catch (err) {
-        console.error('MongoDB connection failed:', err);
-        isConnected = false;
-        // Don't throw - let individual requests handle connection failures
-        return null;
+        throw error;
     }
 };
 
