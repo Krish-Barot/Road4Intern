@@ -1,6 +1,6 @@
 import express from 'express';
 import { validate, UserModel } from '../models/user.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import cors from 'cors';
 
 

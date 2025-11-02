@@ -8,7 +8,8 @@ dotenv.config();
 
 const app = express()
 app.use(express.json())
- app.use(cors());
+app.use(cors());
+
 // connecting to DB
 connectDB();
 
@@ -16,9 +17,16 @@ connectDB();
 app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
 
-const PORT = 3000
 app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/api", (req, res) => res.send("API is working"));
 
-app.listen(PORT, () =>{
-    console.log(`Server running on ${PORT}`)
-})
+// For local development
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on ${PORT}`)
+    });
+}
+
+// Export the app for Vercel serverless functions
+export default app;
