@@ -1,6 +1,7 @@
 import connectDB from "./db.js";
 import express from 'express'
 import cors from "cors";
+import mongoose from 'mongoose';
 import userRoutes from './routes/users.js'
 import authRoutes from './routes/auth.js'
 import dotenv from 'dotenv'
@@ -33,9 +34,31 @@ app.use((err, req, res, next) => {
   });
 });
 
-// connecting to DB (non-blocking)
-connectDB().catch(err => {
-  console.error('Database connection error:', err);
+// connecting to DB - ensure it's connected
+let dbReady = false;
+connectDB()
+  .then(() => {
+    dbReady = true;
+    console.log('Database connected successfully');
+  })
+  .catch(err => {
+    console.error('Database connection error:', err);
+    dbReady = false;
+  });
+
+// Middleware to check DB connection
+app.use((req, res, next) => {
+  if (req.path === '/health' || req.path === '/') {
+    return next();
+  }
+  
+  if (!dbReady && mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ 
+      message: 'Database not connected. Please try again in a moment.',
+      dbStatus: mongoose.connection.readyState 
+    });
+  }
+  next();
 });
 
 // Auth routes
@@ -160,9 +183,16 @@ app.post("/contactUs", async (req, res) => {
     }
 });
 
+app.get("/health", (req, res) => res.json({ 
+    status: "ok",
+    dbConnected: mongoose.connection.readyState === 1,
+    timestamp: new Date().toISOString()
+}));
+
 app.get("/", (req, res) => res.send("Express on Vercel"));
 app.get("/api", (req, res) => res.json({ 
     message: "API is working",
+    dbConnected: mongoose.connection.readyState === 1,
     endpoints: {
         auth: "/api/auth",
         users: "/api/users",

@@ -20,31 +20,44 @@ router.post("/", async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        // Check if request body exists
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required" });
+        }
+
         // Validate request body
         const { error } = validate(req.body);
         if (error) {
-            return res.status(400).send({ message: "Error in validating login" });
+            return res.status(400).json({ message: error.details[0]?.message || "Error in validating login" });
         }
 
         // Find user by email
         const user = await UserModel.findOne({ email });
         if (!user) {
-            return res.status(401).send({ message: "Invalid Email or Password" });
+            return res.status(401).json({ message: "Invalid Email or Password" });
         }
 
         // Compare password using bcryptjs
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
-            return res.status(401).send({ message: "Invalid Email or Password" });
+            return res.status(401).json({ message: "Invalid Email or Password" });
         }
 
         // Generate auth token
         const token = user.generateAuthToken();
-        res.status(200).send({ token, message: "Logged in successfully" });
+        res.status(200).json({ token, message: "Logged in successfully" });
 
     } catch (error) {
-        console.error("Login error:", error);
-        return res.status(500).send({ message: "Internal Server Error in auth !!!" });
+        console.error("Login error details:", {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        // Return more detailed error in development
+        return res.status(500).json({ 
+            message: "Internal Server Error in auth",
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 

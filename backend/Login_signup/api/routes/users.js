@@ -13,22 +13,29 @@ router.post("/", async (req, res) => {
 
         if(error){
             console.log(error.details)
-            return res.status(400).send({message: "Error in validating"})
+            return res.status(400).json({message: error.details[0]?.message || "Error in validating"})
         }
 
         const user = await UserModel.findOne({email: req.body.email})
         if(user){
-            return res.status(409).send({message: "User already exists"})
+            return res.status(409).json({message: "User already exists"})
         }
 
         const salt = await bcrypt.genSalt(Number(process.env.SALT || 10))
         const hashPassword = await bcrypt.hash(req.body.password, salt);
 
         await new UserModel({...req.body, password:hashPassword}).save()
-        res.status(201).send({message: "User created successfully!!"})
+        res.status(201).json({message: "User created successfully!!"})
     } catch (error) {
-        console.log(error)
-        res.status(500).send({message: "Internal server error in users !!"})
+        console.error("Signup error details:", {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        res.status(500).json({
+            message: "Internal server error in users",
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        })
     }
 })
 
