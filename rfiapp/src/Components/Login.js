@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode';
+import { API_ENDPOINTS } from '../config';
 
 const Login = ({ setUser }) => {
     const [data, setData] = useState({ email: "", password: "" });
@@ -19,7 +20,7 @@ const Login = ({ setUser }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const url = "http://localhost:3000/api/auth";
+            const url = API_ENDPOINTS.AUTH;
             const response = await axios.post(url, data);
 
             const token = response.data.token;

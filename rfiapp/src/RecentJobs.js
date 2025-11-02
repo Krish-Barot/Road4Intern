@@ -1,13 +1,14 @@
 import "./RecentJobs.css"
 import { useEffect } from "react";
 import { useState } from "react";
+import { API_ENDPOINTS } from './config';
 
 export default function RecentJobs() {
 
     const [jobData, setJobData] = useState([])
     async function fetchingData() {
         try {
-            const response = await fetch("http://localhost:3001/data");
+            const response = await fetch(API_ENDPOINTS.JOBS_DATA);
             const data = await response.json();
             console.log("Fetched data:", data);
             

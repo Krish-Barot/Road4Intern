@@ -1,5 +1,6 @@
 import './Application.css'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { API_ENDPOINTS } from './config';
 
 export default function Application({ user }) {
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ export default function Application({ user }) {
         }
 
         try {
-            const response = await fetch("http://localhost:3001/application", {
+            const response = await fetch(API_ENDPOINTS.APPLICATION, {
                 method: 'POST',
                 body: formData
             });

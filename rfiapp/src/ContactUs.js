@@ -1,6 +1,7 @@
 import './ContactUs.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { API_ENDPOINTS } from './config';
 
 export default function ContactUs({ user }) {
 
@@ -26,7 +27,7 @@ export default function ContactUs({ user }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await fetch("http://localhost:3001/contactUs", {
+            const res = await fetch(API_ENDPOINTS.CONTACT_US, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, message }),

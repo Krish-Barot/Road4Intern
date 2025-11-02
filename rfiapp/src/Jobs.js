@@ -1,6 +1,7 @@
 import "./Jobs.css"
 import { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { API_ENDPOINTS } from './config';
 
 export default function Jobs({ user }) {
     const [company, setCompany] = useState('');
@@ -37,9 +38,9 @@ export default function Jobs({ user }) {
 
     async function fetchingData() {
         try {
-            const endpoint = location.search
-                ? `http://localhost:3001/filteredJobs${location.search}`
-                : "http://localhost:3001/data";
+        const endpoint = location.search
+            ? `${API_ENDPOINTS.FILTERED_JOBS}${location.search}`
+            : API_ENDPOINTS.JOBS_DATA;
 
             const response = await fetch(endpoint);
             const data = await response.json();

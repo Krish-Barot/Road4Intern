@@ -1,6 +1,7 @@
 import './ApplicationHistory.css';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS } from './config';
 
 export default function ApplicationHistory({ user }) {
     const [applications, setApplications] = useState([]);
@@ -14,7 +15,7 @@ export default function ApplicationHistory({ user }) {
         async function fetchHistory() {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:3001/application-history/${user._id}`);
+                const res = await fetch(API_ENDPOINTS.APPLICATION_HISTORY(user._id));
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
                 console.log("Applications fetched:", data);

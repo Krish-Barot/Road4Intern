@@ -2,6 +2,7 @@ import './JobDetails.css'
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { API_ENDPOINTS } from './config';
 
 export default function JobDetails({ user }) {
     const { id } = useParams();
@@ -23,7 +24,7 @@ export default function JobDetails({ user }) {
     }
 
     async function fetchingData() {
-        const response = await fetch(`http://localhost:3001/jobdetails/${id}`);
+        const response = await fetch(API_ENDPOINTS.JOB_DETAILS(id));
         const data = await response.json()
         setJobData(data)
     }

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import './Homepage.css'
 import { useEffect, useState } from 'react'
+import { API_ENDPOINTS } from './config';
 
 export default function Homepage({ user }) {
     const [job, setJob] = useState([])
@@ -29,7 +30,7 @@ export default function Homepage({ user }) {
             if (location) params.append('location', location);
             if (positionName) params.append('positionName', positionName)
 
-            const url = `http://localhost:3001/filteredJobs?${params.toString()}`;
+            const url = `${API_ENDPOINTS.FILTERED_JOBS}?${params.toString()}`;
 
             const res = await fetch(url);
             const data = await res.json();
@@ -71,12 +72,12 @@ export default function Homepage({ user }) {
     }
 
     async function countCandidates() {
-        const data = await fetch("http://localhost:3001/api/users/count")
+        const data = await fetch(API_ENDPOINTS.USERS_COUNT)
         const response = await data.json()
         return setCandidate(response.count)
     }
     async function countCompany() {
-        const data = await fetch("http://localhost:3001/api/company/count")
+        const data = await fetch(API_ENDPOINTS.COMPANY_COUNT)
         const response = await data.json()
         return setcountCompanies(response.count)
     }
