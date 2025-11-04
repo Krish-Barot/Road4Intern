@@ -47,6 +47,7 @@ const connectDB = async () => {
             console.log("✅ Connected to MongoDB successfully");
             return mongoose.connection;
         } else {
+            console.log(err);   
             throw new Error(`Connection state is ${mongoose.connection.readyState}, expected 1`);
         }
         
