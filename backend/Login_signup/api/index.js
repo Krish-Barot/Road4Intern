@@ -38,10 +38,11 @@ app.use((err, req, res, next) => {
 // In serverless, connection happens on first request, but we start it here
 connectDB()
   .then(() => {
-    console.log('✅ Database connection ready');
+    console.log('Database connection ready');
   })
   .catch(err => {
-    console.error('⚠️ Database connection error at startup:', err.message);
+    console.error('Database connection error at startup:', err.message);
+    console.log(err);
     // Don't fail - let routes handle connection on demand
   });
 
@@ -189,7 +190,7 @@ app.get("/api", (req, res) => res.json({
 }));
 
 // For local development
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`Server running on ${PORT}`)

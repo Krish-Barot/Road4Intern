@@ -36,7 +36,6 @@ const connectDB = async () => {
             maxPoolSize: 1,
             minPoolSize: 0,
             bufferCommands: false,
-            bufferMaxEntries: 0,
         };
 
         console.log('Attempting to connect to MongoDB...');
