@@ -37,7 +37,7 @@ const connectDB = async () => {
             minPoolSize: 0,
             bufferCommands: false,
         };
-        
+
 
         console.log('Attempting to connect to MongoDB...');
         await mongoose.connect(mongoURI, options);
@@ -47,8 +47,7 @@ const connectDB = async () => {
             cachedConnection = mongoose.connection;
             console.log("✅ Connected to MongoDB successfully");
             return mongoose.connection;
-        } else {
-            console.log(err);   
+        } else { 
             throw new Error(`Connection state is ${mongoose.connection.readyState}, expected 1`);
         }
         

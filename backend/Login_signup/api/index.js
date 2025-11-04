@@ -43,7 +43,7 @@ connectDB()
   .catch(err => {
     console.error('Database connection error at startup:', err.message);
     console.log(err);
-    // Don't fail - let routes handle connection on demand
+    throw new Error('Database connection error at startup');
   });
 
 // Auth routes
