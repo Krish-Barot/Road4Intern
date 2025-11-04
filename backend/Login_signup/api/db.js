@@ -37,6 +37,7 @@ const connectDB = async () => {
             minPoolSize: 0,
             bufferCommands: false,
         };
+        
 
         console.log('Attempting to connect to MongoDB...');
         await mongoose.connect(mongoURI, options);
