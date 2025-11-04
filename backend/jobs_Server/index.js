@@ -72,7 +72,7 @@ async function syncJobsFromApify() {
 
 app.get('/data', async (req, res) => {
     try {
-        const data = await internship.find();
+        const data = await internship.find().limit(30);
         res.json(data);
     } catch (err) {
         console.log(err);
