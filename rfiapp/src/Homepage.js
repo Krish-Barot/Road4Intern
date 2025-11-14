@@ -8,9 +8,10 @@ export default function Homepage({ user }) {
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
     const [positionName, setpositionName] = useState('');
-    const [candidate, setCandidate] = useState([])
-    const [countCompanies, setcountCompanies] = useState([])
+    const [candidate, setCandidate] = useState(0)
+    const [countCompanies, setcountCompanies] = useState(0)
     const [menuOpen, setMenuOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
     const navigate = useNavigate()
@@ -23,37 +24,7 @@ export default function Homepage({ user }) {
         navigate("/login")
     }
 
-    async function fetchData() {
-        try {
-            const params = new URLSearchParams();
-            if (company) params.append('company', company);
-            if (location) params.append('location', location);
-            if (positionName) params.append('positionName', positionName)
-
-            const url = `${API_ENDPOINTS.FILTERED_JOBS}?${params.toString()}`;
-
-            const res = await fetch(url);
-            const data = await res.json();
-            
-            // Handle different response formats
-            let jobs = [];
-            if (Array.isArray(data)) {
-                jobs = data;
-            } else if (data && Array.isArray(data.data)) {
-                jobs = data.data;
-            } else if (data && data.success && Array.isArray(data.data)) {
-                jobs = data.data;
-            }
-            
-            setJob(jobs);
-        } catch (error) {
-            console.error("Error fetching jobs:", error);
-            setJob([]);
-        }
-    }
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // Removed duplicate fetchData - jobs are now fetched in fetchCounts
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -71,19 +42,53 @@ export default function Homepage({ user }) {
         navigate("/login");
     }
 
-    async function countCandidates() {
-        const data = await fetch(API_ENDPOINTS.USERS_COUNT)
-        const response = await data.json()
-        return setCandidate(response.count)
+    async function fetchCounts() {
+        try {
+            setLoading(true);
+            // Fetch all counts in parallel for better performance
+            const [usersRes, companiesRes, jobsRes] = await Promise.allSettled([
+                fetch(API_ENDPOINTS.USERS_COUNT),
+                fetch(API_ENDPOINTS.COMPANY_COUNT),
+                fetch(API_ENDPOINTS.JOBS_DATA)
+            ]);
+
+            // Handle users count
+            if (usersRes.status === 'fulfilled' && usersRes.value.ok) {
+                const usersData = await usersRes.value.json();
+                setCandidate(usersData.count || 0);
+            } else {
+                console.error('Failed to fetch users count:', usersRes.reason);
+                setCandidate(0);
+            }
+
+            // Handle companies count
+            if (companiesRes.status === 'fulfilled' && companiesRes.value.ok) {
+                const companiesData = await companiesRes.value.json();
+                setcountCompanies(companiesData.count || 0);
+            } else {
+                console.error('Failed to fetch companies count:', companiesRes.reason);
+                setcountCompanies(0);
+            }
+
+            // Handle jobs count (from jobs data)
+            if (jobsRes.status === 'fulfilled' && jobsRes.value.ok) {
+                const jobsData = await jobsRes.value.json();
+                const jobsArray = Array.isArray(jobsData) ? jobsData : (jobsData.data || []);
+                setJob(jobsArray);
+            } else {
+                console.error('Failed to fetch jobs:', jobsRes.reason);
+            }
+        } catch (error) {
+            console.error('Error fetching counts:', error);
+            setCandidate(0);
+            setcountCompanies(0);
+        } finally {
+            setLoading(false);
+        }
     }
-    async function countCompany() {
-        const data = await fetch(API_ENDPOINTS.COMPANY_COUNT)
-        const response = await data.json()
-        return setcountCompanies(response.count)
-    }
+
     useEffect(() => {
-        countCandidates()
-        countCompany()
+        fetchCounts();
     }, [])
 
     return (

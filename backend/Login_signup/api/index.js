@@ -50,11 +50,23 @@ app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
 
 // Jobs API routes
-// Get all jobs
+// Get all jobs - optimized with projection and limit
 app.get('/data', async (req, res) => {
     try {
-        const data = await internship.find().limit(100); // Limit to prevent timeout
-        res.json(data);
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
+        
+        // Use lean() for faster queries and select only needed fields
+        const data = await internship.find()
+            .select('positionName company location salary description isExpired date_of_post _id')
+            .limit(500)
+            .lean()
+            .sort({ date_of_post: -1 }); // Sort by date
+        
+        res.json(data || []);
     } catch (err) {
         console.error('Error fetching jobs:', err);
         res.status(500).json({ 
@@ -64,28 +76,60 @@ app.get('/data', async (req, res) => {
     }
 });
 
-// Get job details by ID
+// Get job details by ID - optimized
 app.get('/jobdetails/:id', async (req, res) => {
     try {
-        const data = await internship.findById(req.params.id);
-        res.json(data)
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
+        
+        const data = await internship.findById(req.params.id).lean();
+        if (!data) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        res.json(data);
     } catch (err) {
-        console.log(err);
-        res.status(500).send("Internal Server Error");
+        console.error('Error fetching job details:', err);
+        res.status(500).json({ 
+            message: "Internal Server Error",
+            error: err.message 
+        });
     }
 })
 
-// Filtered jobs
+// Filtered jobs - optimized
 app.get('/filteredJobs', async (req, res) => {
-    const { company, location, positionName } = req.query;
+    try {
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
 
-    const filter = {};
-    if (company) filter.company = { $regex: company, $options: 'i' };
-    if (location) filter.location = { $regex: location, $options: 'i' };
-    if (positionName) filter.positionName = { $regex: positionName, $options: 'i' };
+        const { company, location, positionName } = req.query;
 
-    const jobs = await internship.find(filter);
-    res.json(jobs);
+        const filter = {};
+        if (company) filter.company = { $regex: company, $options: 'i' };
+        if (location) filter.location = { $regex: location, $options: 'i' };
+        if (positionName) filter.positionName = { $regex: positionName, $options: 'i' };
+
+        // Use lean() for faster queries
+        const jobs = await internship.find(filter)
+            .select('positionName company location salary description isExpired date_of_post _id')
+            .limit(500)
+            .lean()
+            .sort({ date_of_post: -1 });
+        
+        res.json(jobs || []);
+    } catch (err) {
+        console.error('Error fetching filtered jobs:', err);
+        res.status(500).json({ 
+            message: "Internal Server Error",
+            error: err.message 
+        });
+    }
 });
 
 // File upload configuration
@@ -123,13 +167,24 @@ app.post('/application', upload.single('resume'), async (req, res) => {
     }
 })
 
-// Application history
+// Application history - optimized
 app.get('/application-history/:userId', async (req, res) => {
     try {
-        const applications = await ApplicationModel.find({ userId: req.params.userId }).populate('jobId').sort({ date: -1 });
-        res.json(applications);
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
+        
+        const applications = await ApplicationModel.find({ userId: req.params.userId })
+            .populate('jobId', 'positionName company location salary _id')
+            .select('userId jobId originalname date filename size')
+            .sort({ date: -1 })
+            .lean()
+            .limit(100);
+        res.json(applications || []);
     } catch (err) {
-        console.log(err);
+        console.error('Error fetching application history:', err);
         res.status(500).json({ message: 'Failed to fetch application history' });
     }
 })
@@ -137,21 +192,36 @@ app.get('/application-history/:userId', async (req, res) => {
 // User count
 app.get('/api/users/count', async (req, res) => {
     try {
-        const count = await UserModel.countDocuments()
-        res.json({ count });
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
+        
+        const count = await UserModel.countDocuments();
+        res.json({ count: count || 0 });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to count users' });
+        console.error('Error counting users:', error);
+        res.status(500).json({ error: 'Failed to count users', count: 0 });
     }
 });
 
-// Company count
+// Company count - optimized query
 app.get('/api/company/count', async (req, res) => {
     try {
-        const comp = await internship.aggregate([{ $group: { _id: "$company" } }])
-        const count = comp.length
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            const connectDB = (await import('./db.js')).default;
+            await connectDB();
+        }
+        
+        // Use distinct for better performance than aggregate
+        const companies = await internship.distinct('company');
+        const count = companies ? companies.length : 0;
         res.json({ count });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to count companies' });
+        console.error('Error counting companies:', error);
+        res.status(500).json({ error: 'Failed to count companies', count: 0 });
     }
 });
 

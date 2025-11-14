@@ -6,11 +6,23 @@ import { API_ENDPOINTS } from './config';
 export default function RecentJobs() {
 
     const [jobData, setJobData] = useState([])
+    const [loading, setLoading] = useState(true)
+    
     async function fetchingData() {
         try {
-            const response = await fetch(API_ENDPOINTS.JOBS_DATA);
+            setLoading(true);
+            const response = await fetch(API_ENDPOINTS.JOBS_DATA, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
-            console.log("Fetched data:", data);
             
             // Handle different response formats
             let jobs = [];
@@ -26,8 +38,11 @@ export default function RecentJobs() {
         } catch (error) {
             console.error("Error fetching jobs:", error);
             setJobData([]);
+        } finally {
+            setLoading(false);
         }
     }
+    
     useEffect(() => {
         fetchingData();
     }, []);
@@ -36,7 +51,9 @@ export default function RecentJobs() {
         <div className="jobcard1">
             <h1>Recents Jobs Available</h1>
             <hr></hr>
-            {Array.isArray(jobData) && jobData.slice(0, 5).map((job, i) => (
+            {loading ? (
+                <p>Loading jobs...</p>
+            ) : Array.isArray(jobData) && jobData.length > 0 ? jobData.slice(0, 5).map((job, i) => (
                 <div key={i} className="jobcard2">
                     <h2 className="title">{job.positionName}</h2>
                     <h3 className="company">{job.company}</h3>

@@ -36,13 +36,26 @@ export default function Jobs({ user }) {
         navigate("/login");
     }
 
+    const [loading, setLoading] = useState(false);
+
     async function fetchingData() {
         try {
-        const endpoint = location.search
-            ? `${API_ENDPOINTS.FILTERED_JOBS}${location.search}`
-            : API_ENDPOINTS.JOBS_DATA;
+            setLoading(true);
+            const endpoint = location.search
+                ? `${API_ENDPOINTS.FILTERED_JOBS}${location.search}`
+                : API_ENDPOINTS.JOBS_DATA;
 
-            const response = await fetch(endpoint);
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
             
             // Handle different response formats
@@ -59,6 +72,8 @@ export default function Jobs({ user }) {
         } catch (error) {
             console.error("Error fetching jobs:", error);
             setJobData([]);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -137,7 +152,9 @@ export default function Jobs({ user }) {
 
             <div className="results">
                 <h1 className="head">Jobs Listed</h1>
-                {Array.isArray(jobData) && jobData.length > 0 ? jobData.map((job, i) => (
+                {loading ? (
+                    <p>Loading jobs...</p>
+                ) : Array.isArray(jobData) && jobData.length > 0 ? jobData.map((job, i) => (
                     <div key={i} className="jobcard2">
                         <h2 className="title">{job.positionName}</h2>
                         <h3 className="company">{job.company}</h3>
