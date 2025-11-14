@@ -53,29 +53,30 @@ export default function RecentJobs() {
             <hr></hr>
             {loading ? (
                 <p>Loading jobs...</p>
-            ) : Array.isArray(jobData) && jobData.length > 0 ? jobData.slice(0, 5).map((job, i) => (
-                <div key={i} className="jobcard2">
-                    <h2 className="title">{job.positionName}</h2>
-                    <h3 className="company">{job.company}</h3>
-                    <div className="about">
-                        <p className="column">
-                            <img src="/images/duration.png" className="durationIcon" alt="" />
-                            {job.isExpired === false ? "valid" : "expired"}
-                        </p>
-                        <p className="column">
-                            <img src="/images/salary.png" className="salaryIcon" alt="" />
-                            {job.salary === null ? "TBD" : job.salary}
-                        </p>
-                        <p className="column">
-                            <img src="/images/location.png" className="locationIcon" alt="" />
-                            {job.location}
-                        </p>
+            ) : Array.isArray(jobData) && jobData.length > 0 ? (
+                jobData.slice(0, 5).map((job, i) => (
+                    <div key={i} className="jobcard2">
+                        <h2 className="title">{job.positionName}</h2>
+                        <h3 className="company">{job.company}</h3>
+                        <div className="about">
+                            <p className="column">
+                                <img src="/images/duration.png" className="durationIcon" alt="" />
+                                {job.isExpired === false ? "valid" : "expired"}
+                            </p>
+                            <p className="column">
+                                <img src="/images/salary.png" className="salaryIcon" alt="" />
+                                {job.salary === null ? "TBD" : job.salary}
+                            </p>
+                            <p className="column">
+                                <img src="/images/location.png" className="locationIcon" alt="" />
+                                {job.location}
+                            </p>
 
-                        <button className="jobDetailsbtn" onClick={() => window.open(`/jobs/${job._id}`, '_blank')}>Job Details</button>
+                            <button className="jobDetailsbtn" onClick={() => window.open(`/jobs/${job._id}`, '_blank')}>Job Details</button>
+                        </div>
                     </div>
-                </div>
-            ))}
-            {(!Array.isArray(jobData) || jobData.length === 0) && (
+                ))
+            ) : (
                 <p>No jobs available at the moment.</p>
             )}
 
