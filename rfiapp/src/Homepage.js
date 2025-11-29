@@ -24,7 +24,6 @@ export default function Homepage({ user }) {
         navigate("/login")
     }
 
-    // Removed duplicate fetchData - jobs are now fetched in fetchCounts
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -169,15 +168,7 @@ export default function Homepage({ user }) {
                     </div>
                 </div>
             </div>
-            <footer className='exampleCompanys'>
-                <ul className='companys'>
-                    <li className='companyName'>Adobe</li>
-                    <li className='companyName'>Google</li>
-                    <li className='companyName'>Amazon</li>
-                    <li className='companyName'>Microsoft</li>
-                    <li className='companyName'>Spotify</li>
-                </ul>
-            </footer>
+            
         </div>
 
     )

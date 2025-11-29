@@ -121,10 +121,10 @@
 }
 
 .searchBar {
-        display: flex;
-        flex-direction: column;
-        height: 50px;
-    }
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+}
 
 .filter {
     display: flex;
@@ -162,7 +162,7 @@
     display: flex;
     justify-content: center;
     width: 90vw;
-    margin: 100px auto;
+    margin: 75px auto;
     justify-content: space-evenly;
 }
 
@@ -234,43 +234,44 @@
 }
 
 .hamburger {
-  display: none;
-  font-size: 28px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
 
 @media (max-width: 1024px) {
-  .hamburger {
-    display: block; 
-  }
+    .hamburger {
+        display: block;
+    }
 
-  .navbar {
-    display: none; 
-    width: 100%;
-    background: black;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 15px;
-  }
+    .navbar {
+        display: none;
+        width: 100%;
+        background: black;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
 
-  .navbar.open {
-    display: flex; 
-  }
+    .navbar.open {
+        display: flex;
+    }
 
-  .navUl {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px 0;
-  }
+    .navUl {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 0;
+    }
 }
 
 
 @media (max-width: 800px) {
     .homepage {
         width: 49rem;
+        height: 100vh;
     }
 
     .navbar {
@@ -361,6 +362,14 @@
         line-height: 1;
     }
 
+    .headLine {
+        font-size: 40px;
+    }
+
+    .tagLine {
+        font-size: 15px;
+    }
+
     .data {
         height: 50px;
         gap: 75px;
@@ -449,6 +458,7 @@
     }
 
     .data {
+        display: none;
         gap: 10px;
     }
 

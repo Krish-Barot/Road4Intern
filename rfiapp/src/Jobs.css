@@ -231,6 +231,11 @@
     background: #222;
     color: rgb(0, 195, 133);
   }
+
+  .results {
+    width: 100vw;
+    margin: 500px auto;
+  }
 }
 
 @keyframes slideDown {
@@ -263,8 +268,8 @@
     flex: 1 1 100%;   
   }
 
-  .results {
+  /* .results {
     width: 100vw;
     padding: 0 10px;
-  }
+  } */
 }
